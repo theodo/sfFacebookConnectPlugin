@@ -17,7 +17,7 @@ class sfFacebook
 
   public static function getFacebookCookie()
   {
-    $app_id = self::getApiKey();
+    $app_id = self::getApiId();
     $application_secret = self::getApiSecret();
     $args = array();
     if (!isset($_COOKIE['fbs_' . $app_id]))

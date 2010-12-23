@@ -44,11 +44,11 @@ class BasesfFacebookConnectAuthActions extends sfActions
       &&
       !sfFacebook::getGuardAdapter()->getUserFacebookUid($user->getGuardUser())
       &&
-      sfFacebook::getFacebookClient()->get_loggedin_user()
+      sfFacebook::getFacebookClient()->getUser()
       )
     {
       $sfGuardUser = $user->getGuardUser();
-      sfFacebook::getGuardAdapter()->setUserFacebookUid($sfGuardUser, sfFacebook::getFacebookClient()->get_loggedin_user());
+      sfFacebook::getGuardAdapter()->setUserFacebookUid($sfGuardUser, sfFacebook::getFacebookClient()->getUser());
       $sfGuardUser->save();
     }
     else
