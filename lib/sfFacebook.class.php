@@ -104,12 +104,16 @@ class sfFacebook
    *
    * @return Array
    * @author Benjamin Grandfond <benjaming@theodo.fr>
+   * @author Laurent Bachelier <laurentb@theodo.fr>
    * @since 2010-05-13
+   * @since 2011-07-18 Accept any number of arguments
    */
-  public static function getFacebookApi($param)
+  public static function getFacebookApi(/* polymorphic */)
   {
+    $args = func_get_args();
+    $client = self::getFacebookClient();
 
-    return self::getFacebookClient()->api($param);
+    return call_user_func_array(array($client, 'api'), $args);
   }
 
   /**
