@@ -98,7 +98,7 @@ Installation
           .settings:
             enabled_modules:      [default, sfFacebookConnectAuth, sfFacebookConnectDemo]
 
-  * Eventually use the sfFacebook filters
+  * Optionally use the sfFacebook filters
 
   * etc. A lot still needs to be documented.
 
