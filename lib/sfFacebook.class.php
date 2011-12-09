@@ -517,4 +517,25 @@ class sfFacebook
     return join('&', $parameter_array);
   }
 
+  /**
+   * Get the URL to get authorizations from the user.
+   * @param string $redirect_url Redirect to this URL after.
+   * @param $scope
+   * @return string
+   *
+   * @author Laurent Bachelier <laurentb@theodo.fr>
+   * @since 2011-12-09
+   */
+  public static function getAuthUrl($redirect_url, $scope = array())
+  {
+    $url = 'https://www.facebook.com/dialog/oauth?client_id='.self::getApiId()
+      .'&redirect_uri='.$redirect_url;
+    $scope = implode(',', $scope);
+    if ($scope)
+    {
+      $url .= '&scope='.$scope;
+    }
+
+    return $url;
+  }
 }
