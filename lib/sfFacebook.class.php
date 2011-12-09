@@ -86,9 +86,9 @@ class sfFacebook
   }
 
   /**
-   * get the facebook user
+   * get the facebook UID
    *
-   * @return Array
+   * @return string
    * @author Benjamin Grandfond <benjaming@theodo.fr>
    * @since 2010-05-13
    */
@@ -466,10 +466,30 @@ class sfFacebook
   */
   public static function getAnyFacebookUid()
   {
-
     $cookie = self::getFacebookCookie();
     $fb_uid = $cookie['uid'];
-    sfContext::getInstance()->getLogger()->info('{sfFacebookConnect} Fb_uid from cookie : '.$fb_uid);
+    if ($fb_uid)
+    {
+      $source = 'cookie';
+    }
+    else
+    {
+      $source = 'client';
+      $fb_uid = self::getUser();
+      if ($fb_uid == '0')
+      {
+        $fb_uid = null;
+      }
+    }
+
+    if ($fb_uid)
+    {
+      sfContext::getInstance()->getLogger()->info('{sfFacebookConnect} Fb_uid from '.$source.' : '.$fb_uid);
+    }
+    else
+    {
+      sfContext::getInstance()->getLogger()->info('{sfFacebookConnect} Fb_uid not found');
+    }
 
     return $fb_uid;
   }
