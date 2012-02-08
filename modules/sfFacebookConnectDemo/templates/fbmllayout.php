@@ -11,15 +11,14 @@
 
 </head>
 <body>
-<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
+<script src="http://connect.facebook.net/en_US/all.js#xfbml=1" type="text/javascript"></script>
 
 <?php echo $sf_data->getRaw('sf_content') ?>
 
 
 
 <?php echo javascript_tag("
-  FB.XFBML.Host.autoParseDomTree = false;
-  var sf_fb = new sfFacebookConnect(".sfConfig::get('app_facebook_api_key').");
+  var sf_fb = new sfFacebookConnect(".sfConfig::get('app_facebook_api_id').");
 ") ?>
 
 

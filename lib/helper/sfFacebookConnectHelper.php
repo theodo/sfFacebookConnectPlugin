@@ -101,7 +101,7 @@ function include_facebook_connect_script_src()
 
 function init_sf_fb()
 {
-  return "sf_fb = new sfFacebookConnect('".sfConfig::get('app_facebook_api_key')."', '".url_for(sfConfig::get('app_facebook_connect_signin_url','sfFacebookConnectAuth/signin'))."');";
+  return "sf_fb = new sfFacebookConnect('".sfConfig::get('app_facebook_api_id')."', '".url_for(sfConfig::get('app_facebook_connect_signin_url','sfFacebookConnectAuth/signin'))."');";
 }
 
 
@@ -136,8 +136,8 @@ function facebook_connect_button($forward = '', $callback = '', $options = array
     {
       if (typeof sf_fb == "undefined")
       {';
-  
-  
+
+
   switch(sfConfig::get('app_facebook_js_framework'))
   {
     case 'jQuery':
@@ -157,8 +157,8 @@ function facebook_connect_button($forward = '', $callback = '', $options = array
       ';
       break;
   }
-  
-  
+
+
   $html .=
       '
       }
@@ -166,12 +166,12 @@ function facebook_connect_button($forward = '', $callback = '', $options = array
       {
         sf_fb.requireSession('.implode(',',$js_arguments).');
       }
-      
+
       return false;
     }
     //]]>
   </script>
-  
+
   <a href="#" onclick="return fb_button_click();">'.
     image_tag(
       '/sfFacebookConnectPlugin/images/fb_'.$options['bg'].'_'.$options['size'].'_'.$options['format'].'.gif',

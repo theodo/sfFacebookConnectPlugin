@@ -1,25 +1,24 @@
-sfFacebookConnect = function(api_key, signin_url)
+sfFacebookConnect = function(app_id, signin_url)
 {
-  this.xd_receiver_path = "/sfFacebookConnectPlugin/xd_receiver.htm";
-  this.api_key = api_key;
+  this.app_id = app_id;
   this.signin_url = signin_url;
   this.callback = '';
   this.forward = '';
-  
+
   this.init();
 };
 sfFacebookConnect.prototype.init = function()
 {
-  FB.init({appId: this.api_key, status: true, cookie: true, xfbml: true});
+  FB.init({appId: this.app_id, status: true, cookie: true, xfbml: true});
 }
 sfFacebookConnect.prototype.getSigninUrl = function()
 {
   t_signin_url = this.signin_url;
   if(this.forward != undefined && this.forward != '')
   {
-    t_signin_url += '?forward=' + this.forward; 
+    t_signin_url += '?forward=' + this.forward;
   }
-  
+
   return t_signin_url;
 }
 sfFacebookConnect.prototype.gotoLoginPage = function()
@@ -27,21 +26,31 @@ sfFacebookConnect.prototype.gotoLoginPage = function()
   //console.log(this.getSigninUrl());
   document.location.href= this.getSigninUrl();
 };
-sfFacebookConnect.prototype.requireSession = function(forward, callback)
+sfFacebookConnect.prototype.requireSession = function(forward, callback, permissions) // FINIR PERMISSIONS
 {
+  console.log(permissions);
   this.forward = forward;
-  if (callback==undefined)
+  if (callback == undefined || callback == '')
   {
 	var current_obj = this;
-	callback = function(){current_obj.gotoLoginPage()};
+	callback = function() { current_obj.gotoLoginPage() };
   }
+  this.init();
+
+  options = null;
+  if (permissions != '')
+  {
+    options = {scope: permissions};
+  }
+
   FB.login(function(response) {
-    if (response.session) {
-      callback();
-    } else {
-      // user cancelled login
-    }
-  });
+     if (response.authResponse) {
+       callback();
+     } else {
+       console.log('User cancelled login or did not fully authorize.');
+     }
+   }, options);
+
 };
 
 /*
@@ -58,29 +67,14 @@ sfFacebookConnect.prototype.publishFeedStory = function(form_bundle_id, template
     {
       FB.Connect.showFeedDialog(form_bundle_id, template_data);
       //FB.Connect.showFeedDialog(form_bundle_id, template_data, null, null, FB.FeedStorySize.shortStory, FB.RequireConnect.promptConnect);
-      
+
       // hide the "Loading feed story ..." div
       //ge('feed_loading').style.visibility = "hidden";
     }
   );
 };
 
-sfFacebookConnect.prototype.showPermissionsDialog = function (permissions, callback)
-{
-  FB.ensureInit(
-    function()
-    {
-      FB.Connect.showPermissionDialog(permissions, callback);
-    }
-  );
-}
-
 sfFacebookConnect.prototype.streamPublish = function (message, attachment, action_links)
 {
-  FB.ensureInit(
-    function()
-    {
-      FB.Connect.streamPublish(message, attachment, action_links);
-    }
-  );
+   FB.Connect.streamPublish(message, attachment, action_links);
 }
