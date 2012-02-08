@@ -1,13 +1,13 @@
 <?php use_helper('sfFacebookConnect'); ?>
-<?php 
+<?php
   slot('fb_connect');
   include_facebook_connect_script();
   end_slot();
 ?>
 
 <h1>
-  Welcome <fb:name uid="<?php echo $sf_user->getCurrentFacebookUid() ?>" useyou="false" ></fb:name> !
-  <fb:profile-pic uid="<?php echo $sf_user->getCurrentFacebookUid() ?>" linked="true" ></fb:profile-pic>
+  Welcome <fb:name uid="<?php echo sfFacebook::getAnyFacebookUid() ?>" useyou="false" ></fb:name> !
+  <fb:profile-pic uid="<?php echo sfFacebook::getAnyFacebookUid() ?>" linked="true" ></fb:profile-pic>
 </h1>
 
 <br />

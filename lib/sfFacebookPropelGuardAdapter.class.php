@@ -140,6 +140,11 @@ class sfFacebookPropelGuardAdapter extends sfFacebookGuardAdapter
    */
   public function setUserProfileProperty($user, $property_name, $property)
   {
+    if (!$user)
+    {
+
+      return;
+    }
     $setPropertyMethod = 'set'.$this->getProfilePhpName($property_name);
     $user->getProfile()->$setPropertyMethod($property);
   }
@@ -155,9 +160,14 @@ class sfFacebookPropelGuardAdapter extends sfFacebookGuardAdapter
    */
   public function getUserProfileProperty($user, $property_name)
   {
-    $getPropertyMethod = 'get'.$this->getProfilePhpName($property_name);
+     if (!$user)
+     {
 
-    return $user->getProfile()->$getPropertyMethod();
+      return null;
+     }
+     $getPropertyMethod = 'get'.$this->getProfilePhpName($property_name);
+
+     return $user->getProfile()->$getPropertyMethod();
   }
 
 
