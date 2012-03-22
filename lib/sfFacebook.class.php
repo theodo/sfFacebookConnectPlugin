@@ -358,21 +358,16 @@ class sfFacebook
    * @return integer[]
    * @author fabriceb
    * @since Jun 9, 2009 fabriceb
+   * @since 2012-03-22 fabriceb updated for the new REST API
    */
   public static function getFacebookFriendsUids($user_uid = null)
   {
+    $api_ret = self::getFacebookApi('me/friends');
+    $friends_uids = array();
 
-    try
+    foreach($api_ret['data'] as $friend)
     {
-      $friends_uids = self::getFacebookApi()->friends_get(null, $user_uid);
-    }
-    catch(FacebookRestClientException $e)
-    {
-      $friends_uids = array();
-      if (sfConfig::get('sf_logging_enabled'))
-      {
-        sfContext::getInstance()->getLogger()->info('{FacebookRestClientException} '.$e->getMessage());
-      }
+      $friends_uids[] = $friend['id'];
     }
 
     return $friends_uids;
