@@ -538,4 +538,20 @@ class sfFacebook
 
     return $url;
   }
+
+  /**
+   *
+   * @param string $permission
+   * @return boolean
+   *
+   * @author fabriceb
+   * @since 2012-03-22
+   */
+  public static function hasAppPermission($permission)
+  {
+    $api_ret = self::getFacebookApi('/me?fields=permissions');
+    $permissions = $api_ret['permissions']['data'][0];
+
+    return array_key_exists($permission, $permissions);
+  }
 }
