@@ -23,12 +23,10 @@ sfFacebookConnect.prototype.getSigninUrl = function()
 }
 sfFacebookConnect.prototype.gotoLoginPage = function()
 {
-  //console.log(this.getSigninUrl());
   document.location.href= this.getSigninUrl();
 };
-sfFacebookConnect.prototype.requireSession = function(forward, callback, permissions) // FINIR PERMISSIONS
+sfFacebookConnect.prototype.requireSession = function(forward, callback, permissions)
 {
-  console.log(permissions);
   this.forward = forward;
   if (callback == undefined || callback == '')
   {
